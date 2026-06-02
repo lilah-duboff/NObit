@@ -14,6 +14,9 @@ export default function Home() {
       <Link to={`/profile/${user.id}`}>
         View my tribute wall →
       </Link>
+      <br /><br />
+      <Link to="/write">Write a tribute about someone →
+      </Link>
     </div>
   )
 }
