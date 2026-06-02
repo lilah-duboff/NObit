@@ -1,13 +1,19 @@
-import { UserButton } from '@clerk/clerk-react'
+import { UserButton, useUser } from '@clerk/clerk-react'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
+  const { user } = useUser()
+
   return (
-    <div style={{ padding: '2rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>Welcome to NObit 🌱</h1>
+    <div style={{ maxWidth: '680px', margin: '0 auto', padding: '2rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+        <h1>NObit 🌱</h1>
         <UserButton />
       </div>
-      <p>Your tribute feed will appear here.</p>
+
+      <Link to={`/profile/${user.id}`}>
+        View my tribute wall →
+      </Link>
     </div>
   )
 }
