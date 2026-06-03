@@ -15,6 +15,10 @@ export default function Profile() {
         .eq('subject_id', userId)
         .order('created_at', { ascending: false })
 
+      console.log('userId:', userId)
+      console.log('data:', data)
+      console.log('error:', error)
+
       if (!error) setPosts(data)
       setLoading(false)
     }
