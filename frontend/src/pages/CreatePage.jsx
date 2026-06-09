@@ -39,7 +39,6 @@ export default function CreatePage() {
 
     let avatarUrl = null
 
-    // Upload photo to Supabase storage if provided
     if (avatarFile) {
       const fileExt = avatarFile.name.split('.').pop()
       const fileName = `${user.id}-${Date.now()}.${fileExt}`
@@ -62,14 +61,14 @@ export default function CreatePage() {
     }
 
     const profileData = {
-    clerk_id: forSelf ? user.id : `external-${Date.now()}`,
-    full_name: fullName,
-    birth_year: birthYear || null,
-    death_year: deathYear || null,
-    bio: bio || null,
-    avatar_url: avatarUrl,
-    color_theme: selectedTheme,
-    created_by: user.id
+      clerk_id: forSelf ? user.id : `external-${Date.now()}`,
+      full_name: fullName,
+      birth_year: birthYear || null,
+      death_year: deathYear || null,
+      bio: bio || null,
+      avatar_url: avatarUrl,
+      color_theme: selectedTheme,
+      created_by: user.id
     }
 
     const { data, error: insertError } = await supabase
@@ -141,10 +140,10 @@ export default function CreatePage() {
           </div>
         </div>
 
-        {/* Photo upload */}
+        {/* Avatar upload */}
         <div style={{ marginBottom: '2rem' }}>
           <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.75rem' }}>
-            Photo
+            Photo <span style={{ color: '#aaa', fontWeight: 'normal', fontSize: '0.85rem' }}>(optional)</span>
           </label>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
             <div style={{
@@ -183,6 +182,21 @@ export default function CreatePage() {
               }}>
                 Upload photo
               </label>
+              {avatarPreview && (
+                <button
+                  onClick={() => { setAvatarFile(null); setAvatarPreview(null) }}
+                  style={{
+                    marginLeft: '0.75rem',
+                    background: 'none',
+                    border: 'none',
+                    color: '#aaa',
+                    cursor: 'pointer',
+                    fontSize: '0.85rem'
+                  }}
+                >
+                  Remove
+                </button>
+              )}
               <p style={{ fontSize: '0.8rem', color: '#aaa', marginTop: '0.4rem' }}>JPG or PNG recommended</p>
             </div>
           </div>

@@ -11,8 +11,17 @@ export default function WriteMemory() {
   const [content, setContent] = useState('')
   const [authorName, setAuthorName] = useState('')
   const [isAnonymous, setIsAnonymous] = useState(false)
+  const [photoFile, setPhotoFile] = useState(null)
+  const [photoPreview, setPhotoPreview] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  function handlePhotoChange(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    setPhotoFile(file)
+    setPhotoPreview(URL.createObjectURL(file))
+  }
 
   async function handleSubmit() {
     if (!content.trim()) {
@@ -23,12 +32,37 @@ export default function WriteMemory() {
     setLoading(true)
     setError('')
 
+    let photoUrl = null
+
+    if (photoFile) {
+      const fileExt = photoFile.name.split('.').pop()
+      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('tribute-photos')
+        .upload(fileName, photoFile)
+
+      if (uploadError) {
+        setError('Photo upload failed, please try again')
+        console.error(uploadError)
+        setLoading(false)
+        return
+      }
+
+      const { data: urlData } = supabase.storage
+        .from('tribute-photos')
+        .getPublicUrl(fileName)
+
+      photoUrl = urlData.publicUrl
+    }
+
     const { error: insertError } = await supabase.from('posts').insert({
       subject_id: userId,
       content,
       is_anonymous: isAnonymous,
       author_name: isAnonymous ? null : (isSignedIn ? user.fullName : authorName),
-      author_id: isSignedIn ? user.id : null
+      author_id: isSignedIn ? user.id : null,
+      photo_url: photoUrl
     })
 
     if (insertError) {
@@ -107,7 +141,7 @@ export default function WriteMemory() {
         </div>
 
         {/* Tribute content */}
-        <div style={{ marginBottom: '2rem' }}>
+        <div style={{ marginBottom: '1.5rem' }}>
           <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.5rem' }}>
             Your tribute <span style={{ color: 'red' }}>*</span>
           </label>
@@ -127,6 +161,71 @@ export default function WriteMemory() {
               resize: 'vertical'
             }}
           />
+        </div>
+
+        {/* Photo upload */}
+        <div style={{ marginBottom: '2rem' }}>
+          <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.5rem' }}>
+            Add a photo <span style={{ color: '#aaa', fontWeight: 'normal', fontSize: '0.85rem' }}>(optional)</span>
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoChange}
+            id="tribute-photo"
+            style={{ display: 'none' }}
+          />
+          {!photoPreview ? (
+            <label htmlFor="tribute-photo" style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              padding: '1.5rem',
+              borderRadius: '10px',
+              border: '2px dashed #ddd',
+              cursor: 'pointer',
+              color: '#aaa',
+              fontSize: '0.95rem'
+            }}>
+              📷 Click to add a photo
+            </label>
+          ) : (
+            <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
+              <img
+                src={photoPreview}
+                alt="preview"
+                style={{
+                  width: '100%',
+                  maxHeight: '300px',
+                  objectFit: 'cover',
+                  borderRadius: '10px',
+                  border: '1px solid #eee'
+                }}
+              />
+              <button
+                onClick={() => { setPhotoFile(null); setPhotoPreview(null) }}
+                style={{
+                  position: 'absolute',
+                  top: '8px',
+                  right: '8px',
+                  backgroundColor: 'rgba(0,0,0,0.5)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '28px',
+                  height: '28px',
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                ✕
+              </button>
+            </div>
+          )}
         </div>
 
         {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
