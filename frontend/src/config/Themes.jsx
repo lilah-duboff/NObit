@@ -64,7 +64,7 @@ export const themes = {
     border: '#fdba74'
   },
   indigo: {
-    label: '🌌 Midnight',
+    label: '🌌 Violet',
     primary: '#6366f1',
     background: '#eef2ff',
     card: '#e0e7ff',
@@ -94,5 +94,37 @@ export const themes = {
     card: '#fef3c7',
     text: '#451a03',
     border: '#d97706'
+  },
+  midnight: {
+    label: '🌙 Midnight',
+    primary: '#818cf8',
+    background: '#0f172a',
+    card: '#1e293b',
+    text: '#e2e8f0',
+    border: '#334155'
+  },
+  forest: {
+    label: '🌲 Deep Forest',
+    primary: '#4ade80',
+    background: '#052e16',
+    card: '#14532d',
+    text: '#dcfce7',
+    border: '#166534'
+  },
+  ocean: {
+    label: '🌊 Deep Ocean',
+    primary: '#38bdf8',
+    background: '#0c1a2e',
+    card: '#0c4a6e',
+    text: '#e0f2fe',
+    border: '#075985'
+  },
+  dusk: {
+    label: '🌆 Dusk',
+    primary: '#c084fc',
+    background: '#1a0533',
+    card: '#3b0764',
+    text: '#f3e8ff',
+    border: '#6b21a8'
   }
 }
