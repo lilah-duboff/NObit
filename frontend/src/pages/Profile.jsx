@@ -6,7 +6,7 @@ import { themes } from '../config/themes'
 
 export default function Profile() {
   const { userId } = useParams()
-  const { user, isSignedIn } = useUser()
+  const { user, isSignedIn, isLoaded } = useUser()
   const navigate = useNavigate()
 
   const [profile, setProfile] = useState(null)
@@ -55,7 +55,8 @@ export default function Profile() {
   }
 
   const TRUNCATE_LENGTH = 180
-
+  
+  if (!isLoaded) return null
   return (
     <div style={{ fontFamily: 'Georgia, serif', color: '#1a1a1a', minHeight: '100vh', backgroundColor: theme.background }}>
 
