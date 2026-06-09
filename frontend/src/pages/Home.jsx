@@ -13,13 +13,14 @@ export default function Home() {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '1.25rem 2rem',
-        borderBottom: '1px solid #eee'
+        backgroundColor: '#a8eda5',
+        borderBottom: '1px solid #a4f0b7'
       }}>
         <span style={{ fontWeight: 'bold', fontSize: '1.25rem', letterSpacing: '0.05em' }}>
           NObit 🌱
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <Link to={`/profile/${user.id}`} style={{ color: '#555', textDecoration: 'none', fontSize: '0.9rem' }}>
+          <Link to={`/profile/${user.id}`} style={{ color: '#555555', textDecoration: 'none', fontSize: '0.9rem' }}>
             My Wall
           </Link>
           <UserButton />
@@ -39,7 +40,7 @@ export default function Home() {
           lineHeight: 1.2,
           marginBottom: '1.5rem'
         }}>
-          Celebrate the people<br />you love — right now
+          Celebrate the people<br />you love — in the present
         </h1>
         <p style={{
           fontSize: '1.2rem',
@@ -48,7 +49,7 @@ export default function Home() {
           marginBottom: '1rem'
         }}>
           NObit — short for <em>No Obituary</em> — is a place to share the memories,
-          kind words, and moments that make someone special.
+          kind words, and moments that make someone special. This site was born from the idea that the best tributes are shared while people can still hear them. 
         </p>
         <p style={{
           fontSize: '1.2rem',
@@ -66,7 +67,7 @@ export default function Home() {
           justifyContent: 'center',
           flexWrap: 'wrap'
         }}>
-          <Link to="/write" style={{
+          <Link to="/search" style={{
             backgroundColor: '#22c55e',
             color: 'white',
             padding: '1rem 2rem',
@@ -76,7 +77,10 @@ export default function Home() {
             fontFamily: 'Georgia, serif',
             fontWeight: 'bold',
             minWidth: '220px',
-            textAlign: 'center'
+            textAlign: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}>
             ✍️ Leave a tribute
           </Link>
@@ -92,7 +96,10 @@ export default function Home() {
             fontWeight: 'bold',
             border: '2px solid #1a1a1a',
             minWidth: '220px',
-            textAlign: 'center'
+            textAlign: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}>
             🌱 Create a page for someone
           </Link>
