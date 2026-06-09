@@ -7,23 +7,22 @@ export default function Profile() {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
 
+  console.log('Profile component loaded, userId:', userId)
+
   useEffect(() => {
-    async function fetchPosts() {
-      const { data, error } = await supabase
-        .from('posts')
-        .select('*')
-        .eq('subject_id', userId)
-        .order('created_at', { ascending: false })
+    console.log('useEffect fired')
 
-      console.log('userId:', userId)
-      console.log('data:', data)
-      console.log('error:', error)
-
-      if (!error) setPosts(data)
-      setLoading(false)
-    }
-
-    fetchPosts()
+    supabase
+      .from('posts')
+      .select('*')
+      .eq('subject_id', userId)
+      .order('created_at', { ascending: false })
+      .then(({ data, error }) => {
+        console.log('data:', data)
+        console.log('error:', error)
+        if (!error) setPosts(data)
+        setLoading(false)
+      })
   }, [userId])
 
   return (
