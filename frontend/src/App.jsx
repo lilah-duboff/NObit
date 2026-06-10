@@ -1,5 +1,5 @@
-import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Search from './pages/Search'

@@ -148,7 +148,17 @@ export default function Search() {
             <div>
               <p style={{ margin: 0, fontWeight: 'bold' }}>{profile.full_name}</p>
               {profile.bio && (
-                <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>{profile.bio}</p>
+                <p style={{
+                  margin: 0,
+                  fontSize: '0.9rem',
+                  color: '#666',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
+                }}>
+                  {profile.bio}
+                </p>
               )}
             </div>
 

@@ -2,7 +2,9 @@ import { UserButton, useUser } from '@clerk/clerk-react'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
-  const { user } = useUser()
+  const { user, isLoaded } = useUser()
+
+  if (!isLoaded) return null
 
   return (
     <div style={{ fontFamily: 'Georgia, serif', color: '#1a1a1a' }}>
@@ -13,17 +15,28 @@ export default function Home() {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '1.25rem 2rem',
-        backgroundColor: '#a8eda5',
-        borderBottom: '1px solid #a4f0b7'
+        borderBottom: '1px solid #eee'
       }}>
         <span style={{ fontWeight: 'bold', fontSize: '1.25rem', letterSpacing: '0.05em' }}>
           NObit 🌱
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <Link to={`/profile/${user.id}`} style={{ color: '#555555', textDecoration: 'none', fontSize: '0.9rem' }}>
-            My Wall
-          </Link>
-          <UserButton />
+          {user && (
+            <Link to={`/profile/${user.id}`} style={{ color: '#555', textDecoration: 'none', fontSize: '0.9rem' }}>
+              My Wall
+            </Link>
+          )}
+          {user ? (
+            <UserButton />
+          ) : (
+            <Link to="/sign-in" style={{
+              color: '#555',
+              textDecoration: 'none',
+              fontSize: '0.9rem'
+            }}>
+              Sign in
+            </Link>
+          )}
         </div>
       </div>
 
@@ -40,7 +53,7 @@ export default function Home() {
           lineHeight: 1.2,
           marginBottom: '1.5rem'
         }}>
-          Celebrate the people<br />you love — in the present
+          Celebrate the people<br />you love — right now
         </h1>
         <p style={{
           fontSize: '1.2rem',
@@ -49,7 +62,7 @@ export default function Home() {
           marginBottom: '1rem'
         }}>
           NObit — short for <em>No Obituary</em> — is a place to share the memories,
-          kind words, and moments that make someone special. This site was born from the idea that the best tributes are shared while people can still hear them. 
+          kind words, and moments that make someone special.
         </p>
         <p style={{
           fontSize: '1.2rem',
@@ -77,7 +90,6 @@ export default function Home() {
             fontFamily: 'Georgia, serif',
             fontWeight: 'bold',
             minWidth: '220px',
-            textAlign: 'center',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -96,7 +108,6 @@ export default function Home() {
             fontWeight: 'bold',
             border: '2px solid #1a1a1a',
             minWidth: '220px',
-            textAlign: 'center',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -142,7 +153,8 @@ export default function Home() {
         textAlign: 'center',
         padding: '2rem',
         color: '#aaa',
-        fontSize: '0.85rem'
+        fontSize: '0.85rem',
+        borderTop: '1px solid #eee'
       }}>
         NObit — because the best tributes are shared while people can still hear them 🌱
       </div>

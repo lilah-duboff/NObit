@@ -55,7 +55,7 @@ export default function Profile() {
   }
 
   const TRUNCATE_LENGTH = 180
-  
+
   if (!isLoaded) return null
   return (
     <div style={{ fontFamily: 'Georgia, serif', color: '#1a1a1a', minHeight: '100vh', backgroundColor: theme.background }}>
@@ -183,7 +183,7 @@ export default function Profile() {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))',
           gap: '1.25rem'
         }}>
           {posts.map(post => {
@@ -222,17 +222,20 @@ export default function Profile() {
                 )}
 
                 {/* Content */}
-                <p style={{
+                <div style={{
                   margin: 0,
-                  lineHeight: 1.7,
+                  lineHeight: 1.8,
                   fontSize: '0.97rem',
-                  color: '#1a1a1a'
+                  color: '#1a1a1a',
+                  textAlign: 'left',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word'
                 }}>
                   {isLong && !isExpanded
                     ? post.content.slice(0, TRUNCATE_LENGTH) + '...'
                     : post.content
                   }
-                </p>
+                </div>
 
                 {/* Expand / collapse */}
                 {isLong && (

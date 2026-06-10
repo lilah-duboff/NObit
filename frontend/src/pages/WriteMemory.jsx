@@ -100,31 +100,35 @@ export default function WriteMemory() {
           Share a memory, kind word, or positive review
         </p>
 
-        {/* Author name — only show if not signed in */}
-        {!isSignedIn && (
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.5rem' }}>
-              Your name <span style={{ color: '#aaa', fontWeight: 'normal', fontSize: '0.85rem' }}>(optional)</span>
-            </label>
-            <input
-              type="text"
-              value={authorName}
-              onChange={e => setAuthorName(e.target.value)}
-              placeholder="Leave blank to post anonymously"
-              disabled={isAnonymous}
-              style={{
-                width: '100%',
-                padding: '0.85rem 1rem',
-                borderRadius: '10px',
-                border: '1px solid #ddd',
-                fontSize: '1rem',
-                fontFamily: 'Georgia, serif',
-                boxSizing: 'border-box',
-                opacity: isAnonymous ? 0.4 : 1
-              }}
-            />
-          </div>
+        {/* Author name */}
+      <div style={{ marginBottom: '1.5rem' }}>
+        <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '0.5rem' }}>
+          Your name <span style={{ color: '#aaa', fontWeight: 'normal', fontSize: '0.85rem' }}>(optional)</span>
+        </label>
+        <input
+          type="text"
+          value={isSignedIn ? (isAnonymous ? '' : user.fullName) : authorName}
+          onChange={e => !isSignedIn && setAuthorName(e.target.value)}
+          placeholder={isAnonymous ? 'Posting anonymously' : 'Your name'}
+          disabled={isAnonymous || isSignedIn}
+          style={{
+            width: '100%',
+            padding: '0.85rem 1rem',
+            borderRadius: '10px',
+            border: '1px solid #ddd',
+            fontSize: '1rem',
+            fontFamily: 'Georgia, serif',
+            boxSizing: 'border-box',
+            opacity: isAnonymous ? 0.4 : 1,
+            backgroundColor: isSignedIn ? '#f9f9f9' : 'white'
+          }}
+        />
+        {isSignedIn && !isAnonymous && (
+          <p style={{ fontSize: '0.8rem', color: '#aaa', marginTop: '0.4rem' }}>
+            Your name will appear on the tribute as it appears in your account
+          </p>
         )}
+      </div>
 
         {/* Anonymous toggle */}
         <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
